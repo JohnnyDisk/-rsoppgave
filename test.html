@@ -1,8 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Cart</title>
+</head>
+<body>
+
+<!-- Registration Form -->
+<h2>Register</h2>
+<form id="registerForm">
+    <label for="registerUsername">Username:</label>
+    <input type="text" id="registerUsername" required><br>
+    <label for="registerPassword">Password:</label>
+    <input type="password" id="registerPassword" required><br>
+    <label for="registerConfirmPassword">Confirm Password:</label>
+    <input type="password" id="registerConfirmPassword" required><br>
+    <button type="submit" id="registerEnter">Register</button>
+</form>
+
+<!-- Login Form -->
+<h2>Login</h2>
+<form id="loginForm">
+    <label for="loginUsername">Username:</label>
+    <input type="text" id="loginUsername" required><br>
+    <label for="loginPassword">Password:</label>
+    <input type="password" id="loginPassword" required><br>
+    <button type="submit" id="loginEnter">Login</button>
+</form>
+
+<!-- Shopping Cart Display -->
+<h2>Shopping Cart</h2>
+<div id="cartItems"></div>
+<p>Total Price: $<span id="cartTotalPrice">0.00</span></p>
+
+<!-- Item Buttons -->
+<h2>Items</h2>
+<button class="item-button" id="item1">Item 1 - $10</button>
+<button class="item-button" id="item2">Item 2 - $20</button>
+<button class="item-button" id="item3">Item 3 - $15</button>
+
+<script>
 var users = JSON.parse(localStorage.getItem('users')) || [];
 var currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
 
-//-------------Login & Register -------------//
-
+// Function for user registration
 function register() {
     var registerUsername = document.getElementById("registerUsername").value;
     var registerPassword = document.getElementById("registerPassword").value;
@@ -18,65 +60,61 @@ function register() {
         return;
     }
 
-    if (localStorage.getItem(registerUsername)) {
+    var existingUser = users.find(user => user.username === registerUsername);
+    if (existingUser) {
         alert("Username already exists. Please choose a different username.");
         return;
     }
 
+    // Store user credentials in local storage
     localStorage.setItem(registerUsername, registerPassword);
 
+    // Create a new user object with username, password, and an empty shopping cart
+    var newUser = {
+        username: registerUsername,
+        password: registerPassword,
+        shoppingCart: {}
+    };
+
+    users.push(newUser); // Add the new user object to the array
+    localStorage.setItem('users', JSON.stringify(users)); // Update the users array in local storage
     console.log("Registration successful!");
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    var submitRegisternButton = document.getElementById("registerEnter");
-    if (submitRegisternButton) {
-        submitRegisternButton.addEventListener("click", function(event) {
-            event.preventDefault();
-            register();
-        });
-    }
-});
-
-
+// Function for user login
 function login() {
     var loginUsername = document.getElementById("loginUsername").value;
     var loginPassword = document.getElementById("loginPassword").value;
 
     var storedPassword = localStorage.getItem(loginUsername);
 
+    var user = users.find(user => user.username === loginUsername);
 
-    if (storedPassword === null) {
+    if (!user) {
         alert("Username not found. Please register first.");
         return;
     }
 
-    if (loginPassword !== storedPassword) {
+    if (user.password !== loginPassword) {
         alert("Incorrect password. Please try again.");
         return;
     }
 
+    currentUser = user; // Set the current user
+    sessionStorage.setItem('currentUser', JSON.stringify(currentUser)); // Store current user in session storage
+
     console.log("Login successful!");
-}
 
-document.addEventListener("DOMContentLoaded", function() {
-    var submitLoginButton = document.getElementById("loginEnter");
-    if (submitLoginButton) {
-        submitLoginButton.addEventListener("click", function(event) {
-            event.preventDefault();
-            login();
-        });
+    // Load the user's shopping cart from local storage
+    var storedCart = localStorage.getItem(currentUser.username + '_shoppingCart');
+    if (storedCart) {
+        currentUser.shoppingCart = JSON.parse(storedCart);
     }
-});
 
-//------------- Shopping cart -------------//
-
-var shoppingCart = {};
-
-var storedCart = localStorage.getItem('shoppingCart');
-if (storedCart) {
-    shoppingCart = JSON.parse(storedCart);
+    updateCartDisplay(); // Update the cart display
 }
+
+var shoppingCart = {}; // Shopping cart variable
 
 var itemPrices = {
     "item1": 10,
@@ -85,28 +123,31 @@ var itemPrices = {
     // Add more items and their prices as needed
 };
 
+// Function to add items to the cart
 function addToCart(itemId, itemName, itemPrice, quantity) {
-    if (!shoppingCart[itemId]) {
-        shoppingCart[itemId] = {
+    if (!currentUser.shoppingCart[itemId]) {
+        currentUser.shoppingCart[itemId] = {
             name: itemName,
             price: itemPrice,
             quantity: quantity
         };
     } else {
-        shoppingCart[itemId].quantity += quantity;
+        currentUser.shoppingCart[itemId].quantity += quantity;
     }
     updateCartDisplay();
-    localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
+    localStorage.setItem(currentUser.username + '_shoppingCart', JSON.stringify(currentUser.shoppingCart)); // Store the shopping cart in local storage
 }
 
+// Function to remove items from the cart
 function removeFromCart(itemId) {
-    if (shoppingCart[itemId]) {
-        delete shoppingCart[itemId];
+    if (currentUser.shoppingCart[itemId]) {
+        delete currentUser.shoppingCart[itemId];
     }
     updateCartDisplay();
-    localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
+    localStorage.setItem(currentUser.username + '_shoppingCart', JSON.stringify(currentUser.shoppingCart)); // Store the shopping cart in local storage
 }
 
+// Function to update the cart display
 function updateCartDisplay() {
     var cartItemsElement = document.getElementById("cartItems");
     var cartTotalPriceElement = document.getElementById("cartTotalPrice");
@@ -120,9 +161,9 @@ function updateCartDisplay() {
 
     var totalPrice = 0;
 
-    for (var itemId in shoppingCart) {
-        if (shoppingCart.hasOwnProperty(itemId)) {
-            var item = shoppingCart[itemId];
+    for (var itemId in currentUser.shoppingCart) {
+        if (currentUser.shoppingCart.hasOwnProperty(itemId)) {
+            var item = currentUser.shoppingCart[itemId];
             var totalItemPrice = item.price * item.quantity;
             totalPrice += totalItemPrice;
 
@@ -161,9 +202,9 @@ function updateCartDisplay() {
         selector.addEventListener("change", function(event) {
             var itemId = selector.getAttribute("data-item-id");
             var quantity = parseInt(selector.value);
-            shoppingCart[itemId].quantity = quantity;
+            currentUser.shoppingCart[itemId].quantity = quantity;
             updateCartDisplay();
-            localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
+            localStorage.setItem(currentUser.username + '_shoppingCart', JSON.stringify(currentUser.shoppingCart)); // Store the shopping cart in local storage
         });
     });
 }
@@ -179,11 +220,30 @@ document.addEventListener("DOMContentLoaded", function() {
             addToCart(itemId, itemName, itemPrice, 1); // Adding one item by default
         });
     });
-
-    updateCartDisplay();
 });
-
 
 document.addEventListener("DOMContentLoaded", function() {
-    updateCartDisplay();
+    var submitRegisternButton = document.getElementById("registerEnter");
+    if (submitRegisternButton) {
+        submitRegisternButton.addEventListener("click", function(event) {
+            event.preventDefault();
+            register();
+        });
+    }
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    var submitLoginButton = document.getElementById("loginEnter");
+    if (submitLoginButton) {
+        submitLoginButton.addEventListener("click", function(event) {
+            event.preventDefault();
+            login();
+        });
+    }
+});
+
+updateCartDisplay(); // Update the cart display initially
+</script>
+
+</body>
+</html>
