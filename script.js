@@ -1,8 +1,7 @@
 var users = JSON.parse(localStorage.getItem('users')) || [];
-var currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+var currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
 
-//-------------Login & Register -------------//
-
+// Function to register a new user
 function register() {
     var registerUsername = document.getElementById("registerUsername").value;
     var registerPassword = document.getElementById("registerPassword").value;
@@ -38,13 +37,12 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-
+// Function to handle user login
 function login() {
     var loginUsername = document.getElementById("loginUsername").value;
     var loginPassword = document.getElementById("loginPassword").value;
 
     var storedPassword = localStorage.getItem(loginUsername);
-
 
     if (storedPassword === null) {
         alert("Username not found. Please register first.");
@@ -56,6 +54,14 @@ function login() {
         return;
     }
 
+    currentUser = {
+        username: loginUsername,
+        password: loginPassword,
+        shoppingCart: JSON.parse(localStorage.getItem(loginUsername + "_cart")) || {} // Retrieve shopping cart from localStorage
+    };
+
+    localStorage.setItem('loggedIn', 'true'); // Set login flag in local storage
+    localStorage.setItem('currentUser', JSON.stringify(currentUser)); // Save current user in local storage
     console.log("Login successful!");
 }
 
@@ -67,16 +73,12 @@ document.addEventListener("DOMContentLoaded", function() {
             login();
         });
     }
+
+    // Initialize login status when the page loads
+    if (localStorage.getItem('loggedIn') === 'true') {
+        currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    }
 });
-
-//------------- Shopping cart -------------//
-
-var shoppingCart = {};
-
-var storedCart = localStorage.getItem('shoppingCart');
-if (storedCart) {
-    shoppingCart = JSON.parse(storedCart);
-}
 
 var itemPrices = {
     "item1": 10,
@@ -85,29 +87,21 @@ var itemPrices = {
     // Add more items and their prices as needed
 };
 
-function addToCart(itemId, itemName, itemPrice, quantity) {
-    if (!shoppingCart[itemId]) {
-        shoppingCart[itemId] = {
-            name: itemName,
-            price: itemPrice,
-            quantity: quantity
-        };
-    } else {
-        shoppingCart[itemId].quantity += quantity;
-    }
-    updateCartDisplay();
-    localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
+// Function to handle user logout
+function logout() {
+    currentUser = null;
+    localStorage.removeItem('loggedIn'); // Remove login flag from local storage
+    localStorage.removeItem('currentUser'); // Remove current user from local storage
+    console.log("Logged out successfully!");
 }
 
-function removeFromCart(itemId) {
-    if (shoppingCart[itemId]) {
-        delete shoppingCart[itemId];
-    }
-    updateCartDisplay();
-    localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
+// Function to check if a user is logged in
+function isLoggedIn() {
+    return currentUser !== null;
 }
 
-function updateCartDisplay() {
+// Function to display shopping cart items
+function displayShoppingCart() {
     var cartItemsElement = document.getElementById("cartItems");
     var cartTotalPriceElement = document.getElementById("cartTotalPrice");
 
@@ -120,9 +114,9 @@ function updateCartDisplay() {
 
     var totalPrice = 0;
 
-    for (var itemId in shoppingCart) {
-        if (shoppingCart.hasOwnProperty(itemId)) {
-            var item = shoppingCart[itemId];
+    for (var itemId in currentUser.shoppingCart) {
+        if (currentUser.shoppingCart.hasOwnProperty(itemId)) {
+            var item = currentUser.shoppingCart[itemId];
             var totalItemPrice = item.price * item.quantity;
             totalPrice += totalItemPrice;
 
@@ -147,43 +141,83 @@ function updateCartDisplay() {
     }
 
     cartTotalPriceElement.textContent = totalPrice.toFixed(2);
-
-    var removeButtons = document.querySelectorAll(".remove-item");
-    removeButtons.forEach(function(button) {
-        button.addEventListener("click", function(event) {
-            var itemId = button.getAttribute("data-item-id");
-            removeFromCart(itemId);
-        });
-    });
-
-    var quantitySelectors = document.querySelectorAll(".quantity-selector");
-    quantitySelectors.forEach(function(selector) {
-        selector.addEventListener("change", function(event) {
-            var itemId = selector.getAttribute("data-item-id");
-            var quantity = parseInt(selector.value);
-            shoppingCart[itemId].quantity = quantity;
-            updateCartDisplay();
-            localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
-        });
-    });
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    // Add event listeners to item buttons to add items to cart
+    if (isLoggedIn()) {
+        // User is logged in, so display the shopping cart
+        displayShoppingCart();
+    }
+});
+
+// Function to add items to the cart
+function addToCart(itemId, itemName, itemPrice, quantity) {
+    if (!currentUser || !currentUser.shoppingCart) {
+        console.error("User not logged in or shopping cart not initialized.");
+        return;
+    }
+    if (!currentUser.shoppingCart[itemId]) {
+        currentUser.shoppingCart[itemId] = {
+            name: itemName,
+            price: itemPrice,
+            quantity: quantity
+        };
+    } else {
+        currentUser.shoppingCart[itemId].quantity += quantity;
+    }
+    // Update the shopping cart in localStorage
+    localStorage.setItem(currentUser.username + "_cart", JSON.stringify(currentUser.shoppingCart));
+    localStorage.setItem('currentUser', JSON.stringify(currentUser)); // Save current user in local storage
+}
+
+// Function to remove items from the cart
+function removeFromCart(itemId) {
+    if (!currentUser || !currentUser.shoppingCart) {
+        console.error("User not logged in or shopping cart not initialized.");
+        return;
+    }
+    if (currentUser.shoppingCart[itemId]) {
+        delete currentUser.shoppingCart[itemId];
+    }
+    // Update the shopping cart in localStorage
+    localStorage.setItem(currentUser.username + "_cart", JSON.stringify(currentUser.shoppingCart));
+    localStorage.setItem('currentUser', JSON.stringify(currentUser)); // Save current user in local storage
+}
+
+// Function to update the quantity of items in the cart
+function updateCartQuantity(itemId, quantity) {
+    if (!currentUser || !currentUser.shoppingCart) {
+        console.error("User not logged in or shopping cart not initialized.");
+        return;
+    }
+    if (currentUser.shoppingCart[itemId]) {
+        currentUser.shoppingCart[itemId].quantity = quantity;
+    }
+    // Update the shopping cart in localStorage
+    localStorage.setItem(currentUser.username + "_cart", JSON.stringify(currentUser.shoppingCart));
+    localStorage.setItem('currentUser', JSON.stringify(currentUser)); // Save current user in local storage
+}
+
+// Event listener for item buttons to add items to cart
+document.addEventListener("DOMContentLoaded", function() {
     var itemButtons = document.querySelectorAll(".item-button");
     itemButtons.forEach(function(button) {
         button.addEventListener("click", function(event) {
+            if (!isLoggedIn()) {
+                alert("Please log in to add items to the cart.");
+                return;
+            }
             var itemId = button.getAttribute("id");
             var itemName = button.textContent.trim().split(" - ")[0];
             var itemPrice = itemPrices[itemId];
             addToCart(itemId, itemName, itemPrice, 1); // Adding one item by default
+            // Update the shopping cart display after adding an item
+            displayShoppingCart();
         });
     });
-
-    updateCartDisplay();
 });
 
-
+// Display the shopping cart items when the page loads
 document.addEventListener("DOMContentLoaded", function() {
-    updateCartDisplay();
+    displayShoppingCart();
 });
