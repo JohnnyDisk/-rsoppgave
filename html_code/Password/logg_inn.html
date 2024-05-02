@@ -3,23 +3,57 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="profile.css" />
-    <link rel="icon" type="image/x-icon" href="Images/favi_icon.png" />
+    <link rel="stylesheet" href="/Frontend/Nettside_utvikling/html_code/style.css"/>
+    <link rel="icon" type="image/x-icon" href="/Frontend/Nettside_utvikling/html_code/Images/favi_icon.png"/>
     <script src="script.js"></script>
     <title>Thobe shop</title>
   </head>
   
   <body>
-    <img src="" alt="">
+    <div class="navbar">
+        <div class="logo">
+          <a href="/Frontend/Nettside_utvikling/html_code/index.html">
+            <img src="/Frontend/Nettside_utvikling/html_code/Images/Thobe shop_lol.svg" alt="" />
+          </a>
+        </div>
+
     
+
+        <div class="navbar-buttons">
+          <a href="thobe.html">Thobe</a>
+          <a href="kiffayah.html">Keffiyeh</a>
+          <a href="bisht.html">Bisht</a>
+        </div>
+        
+
+        <div class="buttons">
+          <div class="profile">
+            <a href="password/logg_inn.html">
+            <img src="/Frontend/Nettside_utvikling/html_code/Images/Profile_picture_white.png" alt="">
+            </a>
+          </div>
+          <div class="shopping_cart">
+            <img src="/Frontend/Nettside_utvikling/html_code/Images/shopping-bag_white.png" alt="">
+          </div>
+            
+        </div>
+      </div>
+
+    <h1>Logg inn</h1>
+
     <div class="logg_in_style">
-        <form action="/action_page.php">
+      
+        <form>
         <label for="fname">Username:</label>
-        <br><input type="text" id="fname" name="fname" placeholder="Username"><br><br>
+        <br><input type="text" id="loginUsername" class="inputField" placeholder="Username"><br><br>
         <label for="lname">Password:</label>
-        <br><input type="text" id="lname" name="lname" placeholder="Password"><br><br>
-        <input type="submit" value="Submit">
+        <br><input type="password" id="loginPassword" class="inputField" placeholder="Password">  
+        <a href="registrer.html" class="new_account_style">
+          <p>Are you new? Then make a new account now!</p>
+        </a>
+        <button type="submit" class="submit" id="loginEnter">Logg Inn</button>
         </form>
     </div>
-  </body>   
+  </body>  
+  <script src="/Frontend/Nettside_utvikling/html_code/Backend.js"> </script> 
 </html>

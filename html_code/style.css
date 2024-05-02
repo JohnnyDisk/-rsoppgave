@@ -158,3 +158,44 @@ body {
     justify-content: center;
     gap: 3%;
 }
+
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+    padding:0%;
+    margin:0%;
+    background-color: #EDE1CB;
+    font-family:century gothic;
+}
+
+h1 {
+    display:flex;
+    justify-content:center;
+}
+
+.submit {
+    display:flex;
+    background:#830011;
+    color:white;
+    border:none;
+    padding:8px;
+    border-radius:30px;
+}
+
+
+
+
+.logg_in_style {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.inputField {
+    padding:13px;
+    width:400px;
+}
+
+.new_account_style {
+    display:flex;
+}
