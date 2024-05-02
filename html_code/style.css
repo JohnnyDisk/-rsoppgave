@@ -159,15 +159,6 @@ body {
     gap: 3%;
 }
 
-body {
-    max-width: 100%;
-    overflow-x: hidden;
-    padding:0%;
-    margin:0%;
-    background-color: #EDE1CB;
-    font-family:century gothic;
-}
-
 h1 {
     display:flex;
     justify-content:center;
@@ -182,9 +173,6 @@ h1 {
     border-radius:30px;
 }
 
-
-
-
 .logg_in_style {
     display:flex;
     align-items:center;
@@ -198,4 +186,8 @@ h1 {
 
 .new_account_style {
     display:flex;
+}
+
+#logg_inn_background {
+    background-color:#EDE1CB;
 }
