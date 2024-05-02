@@ -123,6 +123,21 @@ body {
     background-color:#0f0f10;
 }
 
+.footer img {
+    display:flex;
+    justify-content:flex-start;
+    width:350px;
+    padding:0px;
+    margin:0px;
+
+}
+
+.white_footer_line {
+    width:10px;
+    height:10px;
+    background-color:white;
+}
+
 .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     max-width: 300px;
