@@ -80,7 +80,6 @@ body {
     align-items: center; 
 }
 
-
 .info_section {
     display:flex;
     justify-content:center;
@@ -100,7 +99,11 @@ body {
     display:flex;
     justify-content:center;
     font-family:century gothic;
-    
+}
+
+.social_media {
+    position:relative;
+
 }
 
 .best_deals {
@@ -117,18 +120,17 @@ body {
 
 .footer {
     display:flex;
-    justify-content:;
     align-items:center;
     width:100vw;
     height:250px;
-    background-color:#0f0f10;
+    background-color:#80808b;
 }
 
-.footer img {
+.logo_footer {
     width:260px;
     height:150px;
     padding:0px;
-    margin-left:2px;
+    margin-left:5px;
 }
 
 .white_footer_line {
@@ -155,7 +157,7 @@ body {
     outline: 0;
     padding: 12px;
     color: white;
-    background-color: #000;
+    background-color: black;
     text-align: center;
     cursor: pointer;
     width: 100%;
