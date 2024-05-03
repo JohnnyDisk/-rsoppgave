@@ -8,25 +8,49 @@ let ShopItemsData = [{
     name: "White Thobe",
     price: "200",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
-    img: "Images/white_thobe_product_image.jpg",
+    img: "Images/products/white_thobe_product_image.jpg",
 },{
     id: "Thobe_item_2",
     name: "White Thobe",
     price: "200",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
-    img: "Images/white_thobe_product_image.jpg",
-},{
+    img: "Images/products/white_thobe_product_image.jpg",
+},
+
+// Keffiyah
+{
     id: "Keffiyah_item_1",
-    name: "White Thobe",
+    name: "Keffiyah Green",
     price: "200",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
-    img: "Images/white_thobe_product_image.jpg",
+    img: "Images/products/green_and_white_keffiyah.jpg",
+},{
+    id: "Keffiyah_item_2",
+    name: "Keffiyah Red",
+    price: "200",
+    desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
+    img: "Images/products/red_and_white_keffiyah.jpg",
+},{
+    id: "Keffiyah_item_2",
+    name: "Keffiyah Black",
+    price: "200",
+    desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
+    img: "Images/products/black_and_white_keffiyah.jpg",
+},
+
+// Bishts
+{
+    id: "Bisht_item_1",
+    name: "Bisht Black",
+    price: "200",
+    desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
+    img: "Images/products/white_thobe_product_image.jpg",
 },{
     id: "Bisht_item_2",
-    name: "White Thobe",
+    name: "Bisht White",
     price: "200",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
-    img: "Images/white_thobe_product_image.jpg",
+    img: "Images/products/white_thobe_product_image.jpg",
 }]
 
 let thobeShopGenerate = () => {
@@ -34,7 +58,7 @@ let thobeShopGenerate = () => {
 
     let thobeShopHTML = thobeItems.map(item => {
         return `<div class="card">
-            <img src="${item.img}" max-width="200px" width="100%">
+            <img src="${item.img}" max-width="200px" height="200px">
             <h1>${item.name}</h1>
             <p class="price">${item.price} kr</p>
             <p>${item.desc}</p>
@@ -51,7 +75,7 @@ let keffiyahShopGenerate = () => {
     
     let keffiyahHTML = keffiyahItems.map(item => {
         return `<div class="card">
-            <img src="${item.img}" max-width="200px" width="100%">
+            <img src="${item.img}" max-width="200px"  height="200px" >
             <h1>${item.name}</h1>
             <p class="price">${item.price} kr</p>
             <p>${item.desc}</p>
@@ -68,7 +92,7 @@ let bishtShopGenerate = () => {
     
     let bishtHTML = bishtItems.map(item => {
         return `<div class="card">
-            <img src="${item.img}" max-width="200px" width="100%">
+            <img src="${item.img}" max-width="200px" height="200px">
             <h1>${item.name}</h1>
             <p class="price">${item.price} kr</p>
             <p>${item.desc}</p>
