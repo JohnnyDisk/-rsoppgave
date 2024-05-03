@@ -290,7 +290,7 @@ let thobeShopGenerate = () => {
             <h1>${item.name}</h1>
             <p class="price">${item.price} kr</p>
             <p>${item.desc}</p>
-            <p><button>Add to Cart</button></p>
+            <p><button id="item3">Add to Cart</button></p>
         </div>`;
     }).join('');
 
