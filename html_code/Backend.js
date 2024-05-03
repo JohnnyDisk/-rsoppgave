@@ -80,12 +80,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-var itemPrices = {
-    "item1": 10,
-    "item2": 20,
-    "item3": 15
-    // Add more items and their prices as needed
-};
 
 // Function to handle user logout
 function logout() {
@@ -237,49 +231,67 @@ let ShopItemsData = [{
     price: "200",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
     img: "Images/products/white_thobe_product_image.jpg",
+    num: "item1"
 },{
     id: "Thobe_item_2",
     name: "Black Thobe",
     price: "200",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
     img: "Images/products/black_thobe.jpg",
+    num: "item2"
 },
 
 // Keffiyah
 {
-    id: "Keffiyah_item_1",
+    id: "Keffiyah",
     name: "Keffiyah Green",
     price: "200",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
     img: "Images/products/green_and_white_keffiyah.jpg",
+    num: "item3"
 },{
-    id: "Keffiyah_item_2",
+    id: "Keffiyah",
     name: "Keffiyah Red",
     price: "200",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
     img: "Images/products/red_and_white_keffiyah.jpg",
+    num: "item4"
 },{
-    id: "Keffiyah_item_2",
+    id: "Keffiyah",
     name: "Keffiyah Black",
     price: "200",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
     img: "Images/products/black_and_white_keffiyah.jpg",
+    num: "item5"
 },
 
 // Bishts
 {
-    id: "Bisht_item_1",
+    id: "Bisht",
     name: "Gold Bisht",
     price: "200",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
     img: "Images/products/bisht.png",
+    num: "item6"
 },{
-    id: "Bisht_item_2",
+    id: "Bisht",
     name: "Bisht White",
     price: "200",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
     img: "Images/products/black_bisht.webp",
+    num: "item7"
 }]
+
+var itemPrices = {
+    "item1": 10,
+    "item2": 20,
+    "item3": 15,
+    "item4": 40,
+    "item5": 15,
+    "item6": 60,
+    "item7": 10
+};
+
 
 let thobeShopGenerate = () => {
     let thobeItems = ShopItemsData.filter(item => item.id.includes('Thobe'));
@@ -290,7 +302,7 @@ let thobeShopGenerate = () => {
             <h1>${item.name}</h1>
             <p class="price">${item.price} kr</p>
             <p>${item.desc}</p>
-            <p><button id="item3" class="item-button">Add to Cart</button></p>
+            <p><button id="${item.num}" class="item-button">Add to Cart</button></p>
         </div>`;
     }).join('');
 
@@ -307,7 +319,7 @@ let keffiyahShopGenerate = () => {
             <h1>${item.name}</h1>
             <p class="price">${item.price} kr</p>
             <p>${item.desc}</p>
-            <p><button id="item3" class="item-button">Add to Cart</button></p>
+            <p><button id="${item.num}" class="item-button">Add to Cart</button></p>
         </div>`;
     }).join('');
 
@@ -324,7 +336,7 @@ let bishtShopGenerate = () => {
             <h1>${item.name}</h1>
             <p class="price">${item.price} kr</p>
             <p>${item.desc}</p>
-            <p><button id="item3" class="item-button">Add to Cart</button></p>
+            <p><button id="${item.num}" class="item-button">Add to Cart</button></p>
         </div>`;
     }).join('');
 
