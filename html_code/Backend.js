@@ -94,6 +94,35 @@ function isLoggedIn() {
     return currentUser !== null;
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+    var submitLoginButton = document.getElementById("loginEnter");
+    if (submitLoginButton) {
+        submitLoginButton.addEventListener("click", function(event) {
+            event.preventDefault();
+            login();
+        });
+    }
+
+    // Initialize login status when the page loads
+    if (localStorage.getItem('loggedIn') === 'true') {
+        currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    }
+});
+
+
+// Function to handle user logout
+function logout() {
+    currentUser = null;
+    localStorage.removeItem('loggedIn'); // Remove login flag from local storage
+    localStorage.removeItem('currentUser'); // Remove current user from local storage
+    console.log("Logged out successfully!");
+}
+
+// Function to check if a user is logged in
+function isLoggedIn() {
+    return currentUser !== null;
+}
+
 // Function to display shopping cart items
 function displayShoppingCart() {
     var cartItemsElement = document.getElementById("cartItems");
@@ -119,7 +148,7 @@ function displayShoppingCart() {
 
             cartItemDiv.innerHTML = `
                 <p><strong>${item.name}</strong> - $${item.price} (${item.quantity}x)</p>
-                <select class="quantity-selector" data-item-id="${itemId}">
+                <select class="quantity-selector" data-item-id="${itemId}" data-item-price="${item.price}">
                     <option value="1" ${item.quantity === 1 ? 'selected' : ''}>1</option>
                     <option value="2" ${item.quantity === 2 ? 'selected' : ''}>2</option>
                     <option value="3" ${item.quantity === 3 ? 'selected' : ''}>3</option>
@@ -201,20 +230,52 @@ document.addEventListener("DOMContentLoaded", function() {
                 alert("Please log in to add items to the cart.");
                 return;
             }
-            var itemId = button.getAttribute("id");
-            var itemName = button.textContent.trim().split(" - ")[0];
-            var itemPrice = itemPrices[itemId];
-            addToCart(itemId, itemName, itemPrice, 1); // Adding one item by default
-            // Update the shopping cart display after adding an item
-            displayShoppingCart();
+            var parentElement = button.closest('.card');
+            if (parentElement) {
+                var itemNameElement = parentElement.querySelector('h1');
+                if (itemNameElement) {
+                    var itemId = button.getAttribute("id");
+                    var itemName = itemNameElement.textContent.trim();
+                    var itemPrice = itemPrices[itemId];
+                    addToCart(itemId, itemName, itemPrice, 1); // Adding one item by default
+                    // Update the shopping cart display after adding an item
+                    displayShoppingCart();
+                } else {
+                    console.error("No <h1> element found within the parent element.");
+                }
+            } else {
+                console.error("Parent element of the button not found.");
+            }
         });
     });
+});
+
+// Event listener for removing items from the cart
+document.addEventListener("click", function(event) {
+    if (event.target.classList.contains("remove-item")) {
+        var itemId = event.target.getAttribute("data-item-id");
+        removeFromCart(itemId);
+        // Update the shopping cart display after removing an item
+        displayShoppingCart();
+    }
+});
+
+// Event listener for changing quantity in the cart
+document.addEventListener("change", function(event) {
+    if (event.target.classList.contains("quantity-selector")) {
+        var itemId = event.target.getAttribute("data-item-id");
+        var newQuantity = parseInt(event.target.value);
+        updateCartQuantity(itemId, newQuantity);
+        // Update the shopping cart display after changing quantity
+        displayShoppingCart();
+    }
 });
 
 // Display the shopping cart items when the page loads
 document.addEventListener("DOMContentLoaded", function() {
     displayShoppingCart();
 });
+
 
 
 /// CARDS -----------
