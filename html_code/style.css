@@ -115,15 +115,21 @@ body {
 
 .footer {
     display:flex;
-    align-items:center;
+    flex-direction:row;
     width:100vw;
-    height:250px;
-    background-color:#80808b;
+    height:240px;
+    background-color:#770312;
 }
 
-
+.copyright_laws {
+    display:flex;
+    align-items:flex-end;
+    color:white;
+}
 
 .logo_footer {
+    display:flex;
+    align-items:center;
     width:260px;
     height:150px;
     padding:0px;
@@ -131,6 +137,8 @@ body {
 }
 
 .white_footer_line {
+    display:flex;
+    align-items:center;
     width:2px;
     height:170px;
     margin-left:30px;
