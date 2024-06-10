@@ -1,6 +1,16 @@
 var users = JSON.parse(localStorage.getItem('users')) || [];
 var currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
 
+document.addEventListener("DOMContentLoaded", function() {
+    var displayUsername = document.getElementById("name");
+
+    if (currentUser && currentUser.username) {
+        displayUsername.textContent = currentUser.username;
+    } else {
+        displayUsername.textContent = "Log in";
+    }
+});
+
 // Function to register a new user
 function register() {
     var registerUsername = document.getElementById("registerUsername").value;
@@ -39,7 +49,7 @@ function register() {
     localStorage.setItem('currentUser', JSON.stringify(currentUser)); // Save current user in local storage
 
     document.getElementById("registrationSuccessMessage").innerHTML = "Registration successful!";
-    
+
     window.location.href = "logg_inn.html";
 }
 
@@ -162,6 +172,7 @@ document.addEventListener("DOMContentLoaded", function() {
         logoutFormContainer.style.display = "block";
         loggedInUsername.textContent = "You are logged in as " + currentUser.username;
     }
+    
 
     var submitLoginButton = document.getElementById("loginEnter");
     if (submitLoginButton) {
