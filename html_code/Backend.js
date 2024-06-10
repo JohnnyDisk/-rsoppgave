@@ -8,23 +8,39 @@ function register() {
     var registerConfirmPassword = document.getElementById("registerConfirmPassword").value;
 
     if (registerPassword.length < 8) {
-        alert("Password must be at least 8 characters long.");
+        document.getElementById("passwordError").innerHTML = "Password must be at least 8 characters long.";
         return;
+    } else {
+        document.getElementById("passwordError").innerHTML = "";
     }
-
+    
     if (registerPassword !== registerConfirmPassword) {
-        alert("Passwords do not match. Please try again.");
+        document.getElementById("confirmPasswordError").innerHTML = "Passwords do not match. Please try again.";
         return;
+    } else {
+        document.getElementById("confirmPasswordError").innerHTML = "";
     }
-
+    
     if (localStorage.getItem(registerUsername)) {
-        alert("Username already exists. Please choose a different username.");
+        document.getElementById("usernameError").innerHTML = "Username already exists. Please choose a different username.";
         return;
+    } else {
+        document.getElementById("usernameError").innerHTML = "";
     }
 
     localStorage.setItem(registerUsername, registerPassword);
+    // Update login state after successful registration
+    currentUser = {
+    username: registerUsername,
+    password: registerPassword,
+    shoppingCart: {} // Initialize an empty shopping cart
+    };
+    localStorage.setItem('loggedIn', 'true'); // Set login flag in local storage
+    localStorage.setItem('currentUser', JSON.stringify(currentUser)); // Save current user in local storage
 
-    alert("Registration successful!");
+    document.getElementById("registrationSuccessMessage").innerHTML = "Registration successful!";
+    
+    window.location.href = "logg_inn.html";
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -45,13 +61,17 @@ function login() {
     var storedPassword = localStorage.getItem(loginUsername);
 
     if (storedPassword === null) {
-        alert("Username not found. Please register first.");
+        document.getElementById("usernameNotFoundError").innerHTML = "Username not found. Please register first.";
         return;
+    } else {
+        document.getElementById("usernameNotFoundError").innerHTML = "";
     }
-
+    
     if (loginPassword !== storedPassword) {
-        alert("Incorrect password. Please try again.");
+        document.getElementById("incorrectPasswordError").innerHTML = "Incorrect password. Please try again.";
         return;
+    } else {
+        document.getElementById("incorrectPasswordError").innerHTML = "";
     }
 
     currentUser = {
@@ -62,7 +82,8 @@ function login() {
 
     localStorage.setItem('loggedIn', 'true'); // Set login flag in local storage
     localStorage.setItem('currentUser', JSON.stringify(currentUser)); // Save current user in local storage
-    alert("Login sucsessful");
+    document.getElementById("loginSuccessMessage").innerHTML = "Login successful.";
+    window.location.reload();
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -118,10 +139,46 @@ function logout() {
     console.log("Logged out successfully!");
 }
 
+
+
 // Function to check if a user is logged in
 function isLoggedIn() {
     return currentUser !== null;
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    var loginFormContainer = document.getElementById("loginFormContainer");
+    var logoutFormContainer = document.getElementById("logoutFormContainer");
+    var loggedInUsername = document.getElementById("loggedInUsername");
+    var logoutButton = document.getElementById("logout");
+
+    if (!isLoggedIn()) {
+        // If not logged in, display the login form
+        loginFormContainer.style.display = "block";
+        logoutFormContainer.style.display = "none";
+    } else {
+        // If logged in, display the logout form
+        loginFormContainer.style.display = "none";
+        logoutFormContainer.style.display = "block";
+        loggedInUsername.textContent = "You are logged in as " + currentUser.username;
+    }
+
+    var submitLoginButton = document.getElementById("loginEnter");
+    if (submitLoginButton) {
+        submitLoginButton.addEventListener("click", function(event) {
+            event.preventDefault();
+            login();
+        });
+    }
+
+    if (logoutButton) {
+        logoutButton.addEventListener("click", function(event) {
+            event.preventDefault();
+            logout();
+            window.location.reload();
+        });
+    }
+});
 
 // Function to display shopping cart items
 function displayShoppingCart() {
@@ -236,7 +293,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (itemNameElement) {
                     var itemId = button.getAttribute("id");
                     var itemName = itemNameElement.textContent.trim();
-                    var itemPrice = itemPrices[itemId];
+                    var item = ShopItemsData.find(item => item.num === itemId);
+                    var itemPrice = parseFloat(item.price);
                     addToCart(itemId, itemName, itemPrice, 1); // Adding one item by default
                     // Update the shopping cart display after adding an item
                     displayShoppingCart();
@@ -289,14 +347,14 @@ let BishtShop = document.getElementById("bishtShop");
 let ShopItemsData = [{
     id: "Thobe_item_1",
     name: "White Thobe",
-    price: "200",
+    price: "10",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
     img: "Images/products/white_thobe_product_image.jpg",
     num: "item1"
 },{
     id: "Thobe_item_2",
     name: "Black Thobe",
-    price: "200",
+    price: "20",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
     img: "Images/products/black_thobe.jpg",
     num: "item2"
@@ -306,21 +364,21 @@ let ShopItemsData = [{
 {
     id: "Keffiyah",
     name: "Keffiyah Green",
-    price: "200",
+    price: "15",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
     img: "Images/products/green_and_white_keffiyah.jpg",
     num: "item3"
 },{
     id: "Keffiyah",
     name: "Keffiyah Red",
-    price: "200",
+    price: "40",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
     img: "Images/products/red_and_white_keffiyah.jpg",
     num: "item4"
 },{
     id: "Keffiyah",
     name: "Keffiyah Black",
-    price: "200",
+    price: "30",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
     img: "Images/products/black_and_white_keffiyah.jpg",
     num: "item5"
@@ -330,7 +388,7 @@ let ShopItemsData = [{
 {
     id: "Bisht",
     name: "Gold Bisht",
-    price: "200",
+    price: "60",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
     img: "Images/products/bisht.png",
     num: "item6"
@@ -343,16 +401,6 @@ let ShopItemsData = [{
     num: "item7"
 }]
 
-var itemPrices = {
-    "item1": 10,
-    "item2": 20,
-    "item3": 15,
-    "item4": 40,
-    "item5": 15,
-    "item6": 60,
-    "item7": 10
-};
-
 
 let thobeShopGenerate = () => {
     let thobeItems = ShopItemsData.filter(item => item.id.includes('Thobe'));
@@ -361,7 +409,7 @@ let thobeShopGenerate = () => {
         return `<div class="card">
             <img src="${item.img}" max-width="200px" height="200px">
             <h1>${item.name}</h1>
-            <p class="price">${item.price} kr</p>
+            <p class="price">${item.price}$</p>
             <p>${item.desc}</p>
             <p><button id="${item.num}" class="item-button">Add to Cart</button></p>
         </div>`;
@@ -378,7 +426,7 @@ let keffiyahShopGenerate = () => {
         return `<div class="card">
             <img src="${item.img}" max-width="200px"  height="200px" >
             <h1>${item.name}</h1>
-            <p class="price">${item.price} kr</p>
+            <p class="price">${item.price}$</p>
             <p>${item.desc}</p>
             <p><button id="${item.num}" class="item-button">Add to Cart</button></p>
         </div>`;
@@ -395,7 +443,7 @@ let bishtShopGenerate = () => {
         return `<div class="card">
             <img src="${item.img}" max-width="200px" height="200px">
             <h1>${item.name}</h1>
-            <p class="price">${item.price} kr</p>
+            <p class="price">${item.price}$</p>
             <p>${item.desc}</p>
             <p><button id="${item.num}" class="item-button">Add to Cart</button></p>
         </div>`;

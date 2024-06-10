@@ -42,10 +42,9 @@
       </div>
     </div>
 
-    <h1>Logg inn</h1>
-
+    <div id="loginFormContainer">
+      <h1>Logg inn</h1>
     <div class="logg_in_style">
-      
         <form>
         <label for="fname">Username:</label>
         <br><input type="text" id="loginUsername" class="inputField" placeholder="Username"><br><br>
@@ -55,8 +54,23 @@
           <p>Are you new? Then make a new account now!</p>
         </a>
         <button type="submit" class="submit" id="loginEnter">Logg Inn</button>
+
+        <div id="usernameNotFoundError" style="color: red;"></div>
+        <div id="incorrectPasswordError" style="color: red;"></div>
+        <div id="loginSuccessMessage" style="color: green;"></div>
+        
         </form>
     </div>
+  </div>
+    <div id="logoutFormContainer" style="display: none;">
+      <div class="logg_out_style">
+        <h1 id="loggedInUsername"></h1>
+        <div class="logg_in_style">
+            <form>
+            <button type="submit" class="submit" id="logout">Logg Out</button>
+            </form>
+      </div>
+  </div>
   </body>  
   <script src="/html_code/Backend.js"></script> 
 </html>
