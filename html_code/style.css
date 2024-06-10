@@ -158,10 +158,10 @@ body {
     font-size: 22px;
 }
 
-#CartTotalPrice {
+/* #CartTotalPrice {
     display:flex;
     justify-content:center;
-}
+} */
   
 .card button {
     border: none;
