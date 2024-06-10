@@ -41,9 +41,9 @@ function register() {
     localStorage.setItem(registerUsername, registerPassword);
     // Update login state after successful registration
     currentUser = {
-    username: registerUsername,
-    password: registerPassword,
-    shoppingCart: {} // Initialize an empty shopping cart
+        username: registerUsername,
+        password: registerPassword,
+        shoppingCart: {} // Initialize an empty shopping cart
     };
     localStorage.setItem('loggedIn', 'true'); // Set login flag in local storage
     localStorage.setItem('currentUser', JSON.stringify(currentUser)); // Save current user in local storage
@@ -232,6 +232,10 @@ function displayShoppingCart() {
     }
 
     cartTotalPriceElement.textContent = totalPrice.toFixed(2);
+
+    if (totalPrice === 0) {
+        cartItemsElement.innerHTML = '<p>Your shopping cart is empty.</p>';
+    }
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -345,10 +349,24 @@ document.addEventListener("DOMContentLoaded", function() {
     displayShoppingCart();
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+    var buyProductsButton = document.getElementById("buyProducts");
+    if (buyProductsButton) {
+        buyProductsButton.addEventListener("click", function(event) {
+            event.preventDefault(); // Prevent the default form submission behavior
+            clearShoppingCart(); // Call the function to clear the shopping cart
+        });
+    }
+});
+
+// Function to clear the shopping cart
+function clearShoppingCart() {
+    localStorage.removeItem(currentUser.username + "_cart"); // Remove the shopping cart data from localStorage
+    displayShoppingCart(); // Optionally, update the shopping cart display
+}
 
 
 /// CARDS -----------
-
 
 let thobeShop = document.getElementById("thobeShop");
 let keffiyahShop = document.getElementById("keffiyahShop");
