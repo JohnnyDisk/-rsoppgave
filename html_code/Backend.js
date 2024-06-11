@@ -1,12 +1,22 @@
 var users = JSON.parse(localStorage.getItem('users')) || [];
 var currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
 
+// If no user is logged in, log in as guest
+if (!currentUser) {
+    currentUser = {
+        username: "guest",
+        password: "",
+        shoppingCart: JSON.parse(localStorage.getItem('guest_cart')) || {}
+    };
+    localStorage.setItem('currentUser', JSON.stringify(currentUser)); // Save current user in local storage
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     var displayUsername = document.getElementById("name");
-
-    if (currentUser && currentUser.username) {
+    if (currentUser && currentUser.username && currentUser.username !== "guest") {
         displayUsername.textContent = currentUser.username;
     } else {
+        // If not logged in or logged in as "guest", display "Log in"
         displayUsername.textContent = "Log in";
     }
 });
@@ -162,8 +172,8 @@ document.addEventListener("DOMContentLoaded", function() {
     var loggedInUsername = document.getElementById("loggedInUsername");
     var logoutButton = document.getElementById("logout");
 
-    if (!isLoggedIn()) {
-        // If not logged in, display the login form
+    if (!isLoggedIn() || (currentUser && currentUser.username === "guest")) {
+        // If not logged in or logged in as "guest", display the login form
         loginFormContainer.style.display = "block";
         logoutFormContainer.style.display = "none";
     } else {
@@ -361,8 +371,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Function to clear the shopping cart
 function clearShoppingCart() {
-    localStorage.removeItem(currentUser.username + "_cart"); // Remove the shopping cart data from localStorage
-    displayShoppingCart(); // Optionally, update the shopping cart display
+    if (currentUser) {
+        currentUser.shoppingCart = {}; // Clear the shopping cart object
+        localStorage.setItem('currentUser', JSON.stringify(currentUser)); // Update currentUser in localStorage
+        displayShoppingCart(); // Optionally, update the shopping cart display
+    }
 }
 
 
