@@ -414,11 +414,11 @@ function clearShoppingCart() {
 
 
 /// CARDS -----------
-
+document.addEventListener("DOMContentLoaded", function() {
 let thobeShop = document.getElementById("thobeShop");
 let keffiyahShop = document.getElementById("keffiyahShop");
 let BishtShop = document.getElementById("bishtShop");
-let bestproductShop = document.getElementById("bestproduct");
+let bestproductShop = document.getElementById("bestProductShop");
 
 
 let ShopItemsData = [{
@@ -564,3 +564,4 @@ else if (window.location.href.includes("bisht")) {
 else if (window.location.href.includes("index")){
     bestProductShopGenerate();
 }
+});
