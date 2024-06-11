@@ -119,14 +119,14 @@ body {
 }
 
 .info_section_left{
-    width:1300px;
-    height:1000px;
+    width:100vw;
+    height:100vh;
 }
 
-.info_section_right {
-    width:1300px;
-    height:1000px;
-}
+/* .info_section_right {
+    width:auto;
+    height:auto;
+} */
 
 .best_deals_title{
     display:flex;
@@ -190,11 +190,6 @@ body {
     color: grey;
     font-size: 22px;
 }
-
-/* #CartTotalPrice {
-    display:flex;
-    justify-content:center;
-} */
   
 .card button {
     border: none;
@@ -246,3 +241,51 @@ h1 {
 #logg_inn_background {
     background-color:#EDE1CB;
 }
+
+#homepage {
+    display:flex;
+    
+}
+
+#cartItems {
+    display:flex;
+    align-items:flex-start;
+    flex-direction:column;
+    /* position:relative;
+    top:100px;
+    right:1200px; */
+}
+
+.cart-item {
+    display:flex;
+    width:30%;
+    height:110px;
+    align-items:center;
+    color:white;
+
+    background-color:rgb(177, 118, 118);
+    margin-top:1px;
+    margin-bottom:1px;
+}
+
+.remove-item {
+    display:flex;
+    flex-direction:column;
+    position:relative; 
+    top:35px;
+    left:130px;
+}
+
+.quantity-selector {
+    position:relative;
+    bottom:35px;
+    left:200px;
+    width:65px;
+}
+
+#buyProducts {
+
+}
+
+
+
