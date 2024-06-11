@@ -414,18 +414,18 @@ function clearShoppingCart() {
 
 
 /// CARDS -----------
-
+document.addEventListener("DOMContentLoaded", function() {
 let thobeShop = document.getElementById("thobeShop");
 let keffiyahShop = document.getElementById("keffiyahShop");
 let BishtShop = document.getElementById("bishtShop");
-let bestproductShop = document.getElementById("bestproduct");
+let bestproductShop = document.getElementById("bestProductShop");
 
 
 let ShopItemsData = [{
     id: "Thobe_item_1",
     name: "White Thobe",
     price: "10",
-    bestproduct: "yes",
+    quality: "bestproduct",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
     img: "Images/products/white_thobe_product_image.jpg",
     num: "item1"
@@ -433,7 +433,7 @@ let ShopItemsData = [{
     id: "Thobe_item_2",
     name: "Black Thobe",
     price: "20",
-    bestproduct: "no",
+    quality: "no",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
     img: "Images/products/black_thobe.jpg",
     num: "item2"
@@ -444,7 +444,7 @@ let ShopItemsData = [{
     id: "Keffiyah",
     name: "Keffiyah Green",
     price: "15",
-    bestproduct: "yes",
+    quality: "bestproduct",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
     img: "Images/products/green_and_white_keffiyah.jpg",
     num: "item3"
@@ -452,7 +452,7 @@ let ShopItemsData = [{
     id: "Keffiyah",
     name: "Keffiyah Red",
     price: "40",
-    bestproduct: "no",
+    quality: "no",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
     img: "Images/products/red_and_white_keffiyah.jpg",
     num: "item4"
@@ -460,7 +460,7 @@ let ShopItemsData = [{
     id: "Keffiyah",
     name: "Keffiyah Black",
     price: "30",
-    bestproduct: "no",
+    quality: "no",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
     img: "Images/products/black_and_white_keffiyah.jpg",
     num: "item5"
@@ -471,7 +471,7 @@ let ShopItemsData = [{
     id: "Bisht",
     name: "Gold Bisht",
     price: "60",
-    bestproduct: "yes",
+    quality: "bestproduct",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
     img: "Images/products/bisht.png",
     num: "item6"
@@ -479,7 +479,7 @@ let ShopItemsData = [{
     id: "Bisht",
     name: "Bisht White",
     price: "200",
-    bestproduct: "no",
+    quality: "no",
     desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
     img: "Images/products/black_bisht.webp",
     num: "item7"
@@ -537,9 +537,9 @@ let bishtShopGenerate = () => {
 };
 
 let bestProductShopGenerate = () => {
-    let bestProductItems = ShopItemsData.filter(item => item.id.includes('Bisht'));
+    let bestProductItems = ShopItemsData.filter(item =>  item.quality.includes('bestproduct'));
     
-    let bestProductHTML = bishtItems.map(item => {
+    let bestProductHTML = bestProductItems.map(item => {
         return `<div class="card">
             <img src="${item.img}" max-width="200px" height="200px">
             <h1>${item.name}</h1>
@@ -560,6 +560,8 @@ else if (window.location.href.includes("keffiyah")) {
 } 
 else if (window.location.href.includes("bisht")) {
     bishtShopGenerate();
-} else if (window.location.href.includes("index")){
+}
+else if (window.location.href.includes("index")){
     bestProductShopGenerate();
 }
+});
