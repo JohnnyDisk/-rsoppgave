@@ -248,8 +248,7 @@ h1 {
     height:110px;
     align-items:center;
     color:white;
-
-    background-color:rgb(177, 118, 118);
+    background-color:#983946;
     margin-top:1px;
     margin-bottom:1px;
 }
@@ -278,4 +277,16 @@ h1 {
     border:none;
     padding:8px;
     border-radius:30px;
+}
+
+
+.shopping-cart-button {
+    display:flex;
+    margin-top:10px;
+    margin-bottom:10px;
+    justify-content:center;
+}
+
+.cart-item p{
+    margin-left:15px;
 }
