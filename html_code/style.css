@@ -119,14 +119,14 @@ body {
 }
 
 .info_section_left{
-    width:auto;
-    height:auto;
+    width:100vw;
+    height:100vh;
 }
 
-.info_section_right {
+/* .info_section_right {
     width:auto;
     height:auto;
-}
+} */
 
 .best_deals_title{
     display:flex;
@@ -249,23 +249,43 @@ h1 {
 
 #cartItems {
     display:flex;
-    align-items:flex-end;
+    align-items:flex-start;
     flex-direction:column;
-    position:relative;
+    /* position:relative;
     top:100px;
-    right:1200px;
+    right:1200px; */
 }
 
 .cart-item {
     display:flex;
+    width:30%;
+    height:110px;
     align-items:center;
     color:white;
-    padding-right:350px;
-    padding-left:30px;
-    padding-top:10px;
-    padding-bottom:10px;
+
     background-color:rgb(177, 118, 118);
-    margin-top:20px;
-    margin-bottom:20px;
+    margin-top:1px;
+    margin-bottom:1px;
+}
+
+.remove-item {
+    display:flex;
+    flex-direction:column;
+    position:relative; 
+    top:35px;
+    left:130px;
+}
+
+.quantity-selector {
+    position:relative;
+    bottom:35px;
+    left:200px;
+    width:65px;
+}
+
+#buyProducts {
 
 }
+
+
+
