@@ -214,14 +214,7 @@ h1 {
     justify-content:center;
 }
 
-.submit {
-    display:flex;
-    background:#830011;
-    color:white;
-    border:none;
-    padding:8px;
-    border-radius:30px;
-}
+
 
 .logg_in_style {
     display:flex;
@@ -270,9 +263,19 @@ h1 {
     }
 }
 
-.homepage #buyProducts{
+.homepage p{
     display:flex;
-    flex-direction:column;
     justify-content:center;
-    align-items:center;
+
+}
+
+
+.submit {
+    display:flex;
+    background:#830011;
+    color:white;
+    justify-content:center;
+    border:none;
+    padding:8px;
+    border-radius:30px;
 }
