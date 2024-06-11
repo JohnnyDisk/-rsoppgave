@@ -304,6 +304,8 @@ function addToCart(itemId, itemName, itemPrice, quantity) {
     // Update the shopping cart in localStorage
     localStorage.setItem(currentUser.username + "_cart", JSON.stringify(currentUser.shoppingCart));
     localStorage.setItem('currentUser', JSON.stringify(currentUser)); // Save current user in local storage
+
+    updateShoppingCartCounter();
 }
 
 // Function to remove items from the cart
@@ -318,6 +320,7 @@ function removeFromCart(itemId) {
     // Update the shopping cart in localStorage
     localStorage.setItem(currentUser.username + "_cart", JSON.stringify(currentUser.shoppingCart));
     localStorage.setItem('currentUser', JSON.stringify(currentUser)); // Save current user in local storage
+    updateShoppingCartCounter();
 }
 
 // Function to update the quantity of items in the cart
@@ -480,7 +483,7 @@ let thobeShopGenerate = () => {
 
     let thobeShopHTML = thobeItems.map(item => {
         return `<div class="card">
-            <img src="${item.img}" max-width="200px" height="200px">
+            <img src="${item.img}" max-width="200px" height="200px" alt="${item.desc}">
             <h1>${item.name}</h1>
             <p class="price">${item.price}$</p>
             <p>${item.desc}</p>
