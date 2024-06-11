@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
+
 // Function to register a new user
 function register() {
     var registerUsername = document.getElementById("registerUsername").value;
@@ -200,6 +201,36 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
+
+// Function to update the shopping cart counter
+function updateShoppingCartCounter() {
+    var shoppingCartCounter = document.getElementById("shoppingcartCounter");
+    if (isLoggedIn() && currentUser.shoppingCart) {
+        var totalQuantity = 0;
+        for (var itemId in currentUser.shoppingCart) {
+            if (currentUser.shoppingCart.hasOwnProperty(itemId)) {
+                totalQuantity += currentUser.shoppingCart[itemId].quantity;
+            }
+        }
+        if (totalQuantity > 0) {
+            shoppingCartCounter.textContent = totalQuantity;
+            shoppingCartCounter.style.display = "inline-block"; // Show the counter
+        } else {
+            shoppingCartCounter.textContent = ""; // Clear the counter
+            shoppingCartCounter.style.display = "none"; // Hide the counter
+        }
+    } else {
+        shoppingCartCounter.textContent = ""; // Clear the counter
+        shoppingCartCounter.style.display = "none"; // Hide the counter
+    }
+}
+
+
+// Call the function to update the counter when the page loads
+document.addEventListener("DOMContentLoaded", function() {
+    updateShoppingCartCounter();
+});
+
 
 // Function to display shopping cart items
 function displayShoppingCart() {
