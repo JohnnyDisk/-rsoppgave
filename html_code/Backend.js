@@ -1,15 +1,26 @@
 var users = JSON.parse(localStorage.getItem('users')) || [];
 var currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
 
+// If no user is logged in, log in as guest
+if (!currentUser) {
+    currentUser = {
+        username: "guest",
+        password: "",
+        shoppingCart: JSON.parse(localStorage.getItem('guest_cart')) || {}
+    };
+    localStorage.setItem('currentUser', JSON.stringify(currentUser)); // Save current user in local storage
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     var displayUsername = document.getElementById("name");
-
-    if (currentUser && currentUser.username) {
+    if (currentUser && currentUser.username && currentUser.username !== "guest") {
         displayUsername.textContent = currentUser.username;
     } else {
+        // If not logged in or logged in as "guest", display "Log in"
         displayUsername.textContent = "Log in";
     }
 });
+
 
 // Function to register a new user
 function register() {
@@ -162,8 +173,8 @@ document.addEventListener("DOMContentLoaded", function() {
     var loggedInUsername = document.getElementById("loggedInUsername");
     var logoutButton = document.getElementById("logout");
 
-    if (!isLoggedIn()) {
-        // If not logged in, display the login form
+    if (!isLoggedIn() || (currentUser && currentUser.username === "guest")) {
+        // If not logged in or logged in as "guest", display the login form
         loginFormContainer.style.display = "block";
         logoutFormContainer.style.display = "none";
     } else {
@@ -190,6 +201,36 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
+
+// Function to update the shopping cart counter
+function updateShoppingCartCounter() {
+    var shoppingCartCounter = document.getElementById("shoppingcartCounter");
+    if (isLoggedIn() && currentUser.shoppingCart) {
+        var totalQuantity = 0;
+        for (var itemId in currentUser.shoppingCart) {
+            if (currentUser.shoppingCart.hasOwnProperty(itemId)) {
+                totalQuantity += currentUser.shoppingCart[itemId].quantity;
+            }
+        }
+        if (totalQuantity > 0) {
+            shoppingCartCounter.textContent = totalQuantity;
+            shoppingCartCounter.style.display = "inline-block"; // Show the counter
+        } else {
+            shoppingCartCounter.textContent = ""; // Clear the counter
+            shoppingCartCounter.style.display = "none"; // Hide the counter
+        }
+    } else {
+        shoppingCartCounter.textContent = ""; // Clear the counter
+        shoppingCartCounter.style.display = "none"; // Hide the counter
+    }
+}
+
+
+// Call the function to update the counter when the page loads
+document.addEventListener("DOMContentLoaded", function() {
+    updateShoppingCartCounter();
+});
+
 
 // Function to display shopping cart items
 function displayShoppingCart() {
@@ -361,8 +402,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Function to clear the shopping cart
 function clearShoppingCart() {
-    localStorage.removeItem(currentUser.username + "_cart"); // Remove the shopping cart data from localStorage
-    displayShoppingCart(); // Optionally, update the shopping cart display
+    if (currentUser) {
+        currentUser.shoppingCart = {}; // Clear the shopping cart object
+        localStorage.setItem('currentUser', JSON.stringify(currentUser)); // Update currentUser in localStorage
+        displayShoppingCart(); // Optionally, update the shopping cart display
+    }
 }
 
 
