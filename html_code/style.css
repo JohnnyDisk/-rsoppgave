@@ -136,10 +136,6 @@ body {
     margin-bottom:60px;
 }
 
-.best_deals img {
-    width:350px;
-    height:550px;
-}
 
 .footer {
     display:flex;
@@ -179,6 +175,13 @@ body {
     max-width: 300px;
     text-align: center;
     font-family: arial;
+    overflow: hidden;
+    
+}
+
+.card img {
+    width:auto;
+    height:300px;
 }
 
   
