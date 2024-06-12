@@ -432,11 +432,19 @@ let ShopItemsData = [{
 },{
     id: "Thobe_item_2",
     name: "Black Thobe",
-    price: "20",
+    price: "15",
     quality: "no",
-    desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
+    desc: "Discover timeless elegance with our sleek black thobe, tailored for the modern gentleman.",
     img: "Images/products/black_thobe.jpg",
     num: "item2"
+},{
+    id: "Thobe_item_3",
+    name: "Gold Thobe",
+    price: "15",
+    quality: "bestproduct",
+    desc: "Step into sophistication with our premium gold thobe, designed for the modern gentleman.",
+    img: "Images/products/Gold_Thobe.jpg",
+    num: "item3"
 },
 
 // Keffiyah
@@ -445,25 +453,25 @@ let ShopItemsData = [{
     name: "Keffiyah Green",
     price: "15",
     quality: "bestproduct",
-    desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
+    desc: "Elevate your ensemble with our classic green keffiyeh, adding a touch of traditional charm to your look.",
     img: "Images/products/green_and_white_keffiyah.jpg",
-    num: "item3"
-},{
-    id: "Keffiyah",
-    name: "Keffiyah Red",
-    price: "40",
-    quality: "no",
-    desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
-    img: "Images/products/red_and_white_keffiyah.jpg",
     num: "item4"
 },{
     id: "Keffiyah",
-    name: "Keffiyah Black",
-    price: "30",
+    name: "Keffiyah Red",
+    price: "25",
     quality: "no",
-    desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
-    img: "Images/products/black_and_white_keffiyah.jpg",
+    desc: "Infuse your attire with vibrant flair wearing our striking red keffiyeh, blending tradition with contemporary style effortlessly.",
+    img: "Images/products/red_and_white_keffiyah.jpg",
     num: "item5"
+},{
+    id: "Keffiyah",
+    name: "Keffiyah Black",
+    price: "35",
+    quality: "no",
+    desc: "Enhance your ensemble with our versatile black keffiyeh, offering understated elegance for any occasion.",
+    img: "Images/products/black_and_white_keffiyah.jpg",
+    num: "item6"
 },
 
 // Bishts
@@ -472,17 +480,17 @@ let ShopItemsData = [{
     name: "Gold Bisht",
     price: "60",
     quality: "bestproduct",
-    desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
+    desc: "Command attention with our regal Gold Bisht, epitomizing opulence and grandeur for your most special occasions.",
     img: "Images/products/bisht.png",
-    num: "item6"
+    num: "item7"
 },{
     id: "Bisht",
-    name: "Bisht White",
-    price: "200",
+    name: "Black Bisht",
+    price: "75",
     quality: "no",
-    desc: "Embrace timeless elegance with our premium white thobe, exquisitely crafted for the modern gentleman",
+    desc: "Elevate your attire with our distinguished Black Bisht, exuding sophistication and refinement for any formal occasion.",
     img: "Images/products/black_bisht.webp",
-    num: "item7"
+    num: "item8"
 }]
 
 
@@ -564,3 +572,24 @@ else if (window.location.href.includes("bisht")) {
 else if (window.location.href.includes("index")){
     bestProductShopGenerate();
 }
+
+
+// HAMBURGER MENU
+
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.querySelector('.hamburger');
+    const dropdownContent = document.querySelector('.dropdown-content');
+  
+    hamburger.addEventListener('click', function(event) {
+      event.stopPropagation(); // Prevents click event from propagating to document
+      dropdownContent.classList.toggle('show');
+    });
+  
+    // Close dropdown when clicking outside of it
+    document.addEventListener('click', function(event) {
+      if (!dropdownContent.contains(event.target) && !hamburger.contains(event.target)) {
+        dropdownContent.classList.remove('show');
+      }
+    });
+  });
+  
