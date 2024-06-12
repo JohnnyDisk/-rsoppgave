@@ -269,6 +269,7 @@ function displayShoppingCart() {
             `;
 
             cartItemsElement.appendChild(cartItemDiv);
+            updateShoppingCartCounter();
         }
     }
 
@@ -399,6 +400,7 @@ document.addEventListener("DOMContentLoaded", function() {
         buyProductsButton.addEventListener("click", function(event) {
             event.preventDefault(); // Prevent the default form submission behavior
             clearShoppingCart(); // Call the function to clear the shopping cart
+            updateShoppingCartCounter();
         });
     }
 });
