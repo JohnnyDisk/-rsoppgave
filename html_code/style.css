@@ -119,8 +119,9 @@ body {
 }
 
 .start_section_image{
-    width: auto;
+    width: 100vw;
     height:100vh;
+
 }
 
 .best_deals_title{
