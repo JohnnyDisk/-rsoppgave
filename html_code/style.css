@@ -236,10 +236,18 @@ h1 {
     background-color:#EDE1CB;
 }
 
-/* #homepage {
+.Introduction-container {
+    position:absolute;
+    margin-top:320px;
+    background-color:#EDE1CB;
+    padding-right:900px;
+    padding-bottom:400px;
+}
+
+.Introduction-container h1{
     display:flex;
-    
-}*/
+    justify-content:center;
+}
 
 #cartItems {
     display:flex;
