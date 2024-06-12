@@ -313,7 +313,7 @@ h1 {
 /* Media query for hamburger menu */
 @media (max-width: 900px) {
     .inputField {
-        width: 100%;
+        width: 75vw;
     }
     .shop {
         flex-direction: column;
