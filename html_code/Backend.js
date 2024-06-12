@@ -414,7 +414,7 @@ function clearShoppingCart() {
 
 
 /// CARDS -----------
-document.addEventListener("DOMContentLoaded", function() {
+
 let thobeShop = document.getElementById("thobeShop");
 let keffiyahShop = document.getElementById("keffiyahShop");
 let BishtShop = document.getElementById("bishtShop");
@@ -564,4 +564,3 @@ else if (window.location.href.includes("bisht")) {
 else if (window.location.href.includes("index")){
     bestProductShopGenerate();
 }
-});
